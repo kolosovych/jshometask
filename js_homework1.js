@@ -133,9 +133,9 @@
 
 
 // (+null == false) < 1 ** 5; 
-const emptyValue = null; // значення null
-const bool = false // boolean
-const num1 = 1; // number
-const num2 = 5; // number
-const result = (+emptyValue == bool) < num1 ** num2 //нова змінна. Спершу виконується дія в дужках. +emptyValue інтерпретується як 0, bool також інтерпретується як 0, тому (+emptyValue == bool) - true. Далі підносимо до степеня num1 ** num2 - 1. Далі порівнюємо true(1) < 1. 
-console.log(result, typeof result) //result: false boolean
+// const emptyValue = null; // значення null
+// const bool = false // boolean
+// const num1 = 1; // number
+// const num2 = 5; // number
+// const result = (+emptyValue == bool) < num1 ** num2 //нова змінна. Спершу виконується дія в дужках. +emptyValue інтерпретується як 0, bool також інтерпретується як 0, тому (+emptyValue == bool) - true. Далі підносимо до степеня num1 ** num2 - 1. Далі порівнюємо true(1) < 1. 
+// console.log(result, typeof result) //result: false boolean
