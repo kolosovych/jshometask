@@ -1,0 +1,154 @@
+{
+	"info": {
+		"_postman_id": "78015736-65ec-43a5-8739-50f4008af333",
+		"name": "Atlasairbnb",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26271146",
+		"_collection_link": "https://hillel-0461.postman.co/workspace/Atlas~4477b407-86e8-4989-8ab9-22edf7b6e6ab/collection/26271146-78015736-65ec-43a5-8739-50f4008af333?action=share&source=collection_link&creator=26271146"
+	},
+	"item": [
+		{
+			"name": "find document by property type - House",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/search/query?property_type=House",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"search",
+						"query"
+					],
+					"query": [
+						{
+							"key": "property_type",
+							"value": "House"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"let jsonData = pm.response.json();",
+							"pm.collectionVariables.set(\"userId\", jsonData._id);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}",
+					"host": [
+						"{{baseUrl}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check user created",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"_id is the same\", function () {",
+							"   let expectedId = pm.collectionVariables.get(\"userId\"); ",
+							"   let actualId = pm.response.json()._id;",
+							"   ",
+							"   pm.expect(actualId).to.eql(expectedId);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/{{userId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Message is correct\", function () {",
+							"    let jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.eql(\"Документ видалено\");",
+							"});",
+							"",
+							"pm.test(\"Deleted correct document\", function () {",
+							"    let expectedId = pm.collectionVariables.get(\"userId\");",
+							"    let jsonData = pm.response.json();",
+							"    pm.expect(jsonData.deletedDocument._id).to.eql(expectedId);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/{{userId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "userId",
+			"value": ""
+		}
+	]
+}
